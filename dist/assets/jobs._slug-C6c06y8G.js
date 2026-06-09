@@ -1,0 +1,1 @@
+import{j as o,L as t}from"./index-B_mq_sqi.js";const n=()=>o.jsxs("div",{className:"container-page py-20 text-center",children:[o.jsx("h1",{className:"text-2xl font-bold",children:"Job not found"}),o.jsx(t,{to:"/jobs",className:"mt-3 inline-block text-sm font-medium text-primary hover:underline",children:"Browse all jobs"})]});export{n as notFoundComponent};

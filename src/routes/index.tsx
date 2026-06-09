@@ -9,6 +9,7 @@ import {
   FileCheck2,
   Globe2,
   HardHat,
+  Headset,
   Hotel,
   MapPin,
   Search,
@@ -122,13 +123,6 @@ function Home() {
     });
   };
 
-  const features = [
-    { icon: Globe2, label: "বিশ্বস্ত নিয়োগকর্তা" },
-    { icon: FileCheck2, label: "সহজ আবেদন প্রক্রিয়া" },
-    { icon: ShieldCheck, label: "নিরাপদ ও স্বচ্ছ সেবা" },
-    { icon: Users2, label: "সার্বক্ষণিক সহযোগিতা" },
-  ];
-
   const countries = [
     { name: "সৌদি আরব", code: "sa" },
     { name: "সংযুক্ত আরব আমিরাত", code: "ae" },
@@ -145,55 +139,46 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[500px] overflow-hidden bg-slate-100">
-        {/* Background Image Container */}
+      <section className="relative overflow-hidden bg-white">
+        {/* Mobile specific adjustment for background to show models better */}
+        <style>{`
+          @media (max-width: 768px) {
+            .hero-bg-div {
+              background-position: 80% top !important;
+            }
+          }
+        `}</style>
         <div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 hero-bg-div"
           style={{
             backgroundImage: `url(${heroBg})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'right 20% top 15%',
+            backgroundPosition: 'right top',
             backgroundRepeat: 'no-repeat'
           }}
-        >
-          {/* Gradient Overlay for text readability - stronger white on the left */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent md:from-white md:via-white/40" />
-        </div>
+        />
+  
+        <div className="container-page relative z-10 pt-16 pb-16 md:pt-24 lg:pt-32 lg:pb-20">
+             <div className="w-full text-center">
+               <h1 className="text-[28px] font-extrabold leading-tight text-[#000000] md:text-[56px]">
+                 আপনার স্বপ্নের বিদেশি চাকরি<br />
+                 <span className="text-[#0B4F9C]">এখন হাতের নাগালে</span>
+               </h1>
+               <p className="mt-4 text-base text-[#2d3748] max-w-2xl mx-auto md:text-xl md:mt-6">
+                 সহজ আবেদন, নিশ্চিত সুযোগ গড়ুন আপনার উজ্জ্বল ভবিষ্যৎ
+               </p>
 
-        <div className="container-page relative z-10 py-16 lg:py-24">
-          <div className="w-full">
-            <h1 className="text-[40px] font-extrabold leading-tight text-[#0a1929] md:text-[56px]">
-              আপনার স্বপ্নের<br />
-              বিদেশি চাকরি এখন<br />
-              <span className="text-[#0b4f9c]">হাতের নাগালে</span>
-            </h1>
-            <p className="mt-4 text-xl text-[#2d3748]">
-              সহজ আবেদন, নিশ্চিত সুযোগ গড়ুন আপনার উজ্জ্বল ভবিষ্যৎ
-            </p>
+            {/* Large gap to keep faces clear in the background */}
+            <div className="h-[280px] md:h-[350px]" />
 
-            {/* Feature Icons */}
-            <div className="mt-8 flex flex-wrap gap-8 md:gap-12">
-              {features.map((feature, idx) => {
-                const Icon = feature.icon;
-                return (
-                  <div key={idx} className="flex flex-col items-start gap-2">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/90 shadow-sm border border-blue-100">
-                      <Icon className="h-8 w-8 text-[#0b4f9c]" />
-                    </div>
-                    <span className="text-sm font-semibold text-[#0a1929] whitespace-nowrap">{feature.label}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Search Card */}
-            <div className="max-w-4xl">
+            {/* Search Card - Moved to the bottom of hero and centered */}
+            <div className="max-w-4xl mx-auto relative z-10 mt-16 md:mt-0">
               <form
                 onSubmit={submitSearch}
-                className="mt-8 rounded-2xl bg-[#0b4f9c] p-5 shadow-xl"
+                className="rounded-2xl bg-[#0b4f9c] p-4 md:p-5 shadow-xl"
               >
-                <h3 className="mb-4 text-lg font-bold text-white">আপনার পছন্দের চাকরি খুঁজুন</h3>
-                <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
+                <h3 className="mb-3 md:mb-4 text-base md:text-lg font-bold text-white text-center">আপনার পছন্দের চাকরি খুঁজুন</h3>
+                <div className="grid gap-2 md:gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
                   <div className="relative flex items-center justify-center bg-white rounded-xl">
                     <Search className="absolute left-4 h-4 w-4 text-gray-500" />
                     <input
@@ -201,7 +186,7 @@ function Home() {
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
                       placeholder="চাকরির কীওয়ার্ড"
-                      className="w-full rounded-xl border-0 bg-transparent py-4 pl-10 pr-4 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                      className="w-full rounded-xl border-0 bg-transparent py-3 md:py-4 pl-10 pr-4 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none"
                     />
                   </div>
                   <div className="relative flex items-center justify-center bg-white rounded-xl">
@@ -209,7 +194,7 @@ function Home() {
                     <select
                       value={country}
                       onChange={(event) => setCountry(event.target.value)}
-                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
+                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-3 md:py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
                     >
                       <option value="">দেশ নির্বাচন করুন</option>
                       {COUNTRIES.map((c) => (
@@ -222,7 +207,7 @@ function Home() {
                     <select
                       value={industry}
                       onChange={(event) => setIndustry(event.target.value)}
-                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
+                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-3 md:py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
                     >
                       <option value="">ক্যাটাগরি নির্বাচন করুন</option>
                       {INDUSTRIES.map((i) => (
@@ -232,7 +217,7 @@ function Home() {
                   </div>
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e6fff] px-8 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#155bd8] active:scale-[0.98]"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e6fff] px-8 py-3 md:py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#155bd8] active:scale-[0.98]"
                   >
                     খুঁজুন
                   </button>
@@ -240,18 +225,22 @@ function Home() {
               </form>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Popular Destinations */}
-          <div className="mt-8 rounded-2xl bg-white/80 backdrop-blur-sm p-6 border border-gray-100 shadow-xl animate-fade-up relative z-10 w-full">
+      {/* Popular Destinations - New Section */}
+      <section className="bg-slate-50 py-10 border-b border-gray-100">
+        <div className="container-page">
+          <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm animate-fade-up w-full">
             <div className="flex flex-col lg:flex-row items-center gap-6">
               <span className="text-sm font-bold text-[#0a1929] whitespace-nowrap lg:border-r lg:border-gray-200 lg:pr-8">
                 জনপ্রিয় গন্তব্য
               </span>
               
-              <div className="flex flex-wrap justify-between items-center gap-4 md:gap-6 w-full">
-                {/* Country Flags */}
-                {countries.map((c) => (
-                  <div key={c.code} className="flex flex-col items-center gap-2 group cursor-pointer min-w-[70px]">
+              <div className="grid grid-cols-3 gap-y-8 gap-x-2 md:flex md:flex-wrap md:justify-between items-center w-full">
+                {/* Country Flags - Showing 9 countries for a perfect 3x3 grid on mobile */}
+                {countries.slice(0, 9).map((c) => (
+                  <div key={c.code} className="flex flex-col items-center gap-2 group cursor-pointer">
                     <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md transition-all duration-300 group-hover:scale-110">
                       <img
                         src={c.code === 'eu' 

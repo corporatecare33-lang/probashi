@@ -1,0 +1,1 @@
+import{j as n,L as t}from"./index-DjiHU1Hg.js";const e=()=>n.jsxs("div",{className:"container-page py-20 text-center",children:[n.jsx("h1",{className:"text-2xl font-bold",children:"Country not found"}),n.jsx(t,{to:"/countries",className:"mt-4 inline-block text-royal underline",children:"Back to countries"})]});export{e as notFoundComponent};

@@ -1,0 +1,14 @@
+DirectoryIndex index.html
+
+RewriteEngine On
+RewriteBase /
+
+# Keep real files and folders working normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send app routes like /employer, /login, and /login?tab=signin to the SPA.
+# Query strings are preserved by default.
+RewriteRule ^(employer|login)/?$ index.html [L]
+RewriteRule ^ index.html [L]
