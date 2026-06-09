@@ -26,6 +26,7 @@ import {
 import { JobCard } from "@/components/job/JobCard";
 import { COUNTRIES, INDUSTRIES, JOBS, TOP_COMPANIES } from "@/lib/jobs";
 import { useLanguage } from "@/lib/language";
+import heroBg from "@/assets/hero-bg.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -149,7 +150,7 @@ function Home() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
+            backgroundImage: `url(${heroBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
