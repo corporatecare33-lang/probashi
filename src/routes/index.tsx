@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { JobCard } from "@/components/job/JobCard";
 import { COUNTRIES, INDUSTRIES, JOBS, TOP_COMPANIES } from "@/lib/jobs";
+import { useLanguage } from "@/lib/language";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,13 +42,9 @@ export const Route = createFileRoute("/")({
 });
 
 const popularSearches = [
-  { label: "Facilities Management", icon: Wrench, tone: "text-royal bg-royal-soft" },
-  { label: "Cleaner", icon: Sparkles, tone: "text-sky bg-sky-soft" },
-  { label: "Driver", icon: Truck, tone: "text-warning-foreground bg-warning-soft" },
-  { label: "Electrician", icon: Zap, tone: "text-indigo bg-indigo-soft" },
-  { label: "Technician", icon: Wrench, tone: "text-success bg-success-soft" },
-  { label: "Construction", icon: HardHat, tone: "text-warning-foreground bg-warning-soft" },
-  { label: "Hospitality", icon: Hotel, tone: "text-rose bg-rose-soft" },
+  { label: "Facilities Management", slug: "facilities-management", icon: Wrench, tone: "text-royal bg-royal-soft" },
+  { label: "Cleaner", slug: "cleaning-services", icon: Sparkles, tone: "text-sky bg-sky-soft" },
+  { label: "Driver", slug: "driving", icon: Truck, tone: "text-warning-foreground bg-warning-soft" },
 ];
 
 const industryIcons: Record<string, { icon: React.ComponentType<{ className?: string }>; tone: string }> = {
@@ -106,180 +103,165 @@ function useTypewriter(words: string[], typeMs = 80, holdMs = 1400, eraseMs = 40
 }
 
 function Home() {
-  const typed = useTypewriter(TYPING_JOBS);
+  const { language, t } = useLanguage();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [country, setCountry] = useState("");
+  const [industry, setIndustry] = useState("");
+
+  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    void navigate({
+      to: "/jobs",
+      search: {
+        q: query.trim() || undefined,
+        country: country || undefined,
+        industry: industry || undefined,
+      },
+    });
+  };
+
+  const features = [
+    { icon: Globe2, label: "বিশ্বস্ত নিয়োগকর্তা" },
+    { icon: FileCheck2, label: "সহজ আবেদন প্রক্রিয়া" },
+    { icon: ShieldCheck, label: "নিরাপদ ও স্বচ্ছ সেবা" },
+    { icon: Users2, label: "সার্বক্ষণিক সহযোগিতা" },
+  ];
+
+  const countries = [
+    { name: "সৌদি আরব", code: "sa" },
+    { name: "সংযুক্ত আরব আমিরাত", code: "ae" },
+    { name: "কাতার", code: "qa" },
+    { name: "ওমান", code: "om" },
+    { name: "কুয়েত", code: "kw" },
+    { name: "মালয়েশিয়া", code: "my" },
+    { name: "সিঙ্গাপুর", code: "sg" },
+    { name: "ইউরোপ", code: "eu" },
+    { name: "জাপান", code: "jp" },
+    { name: "দক্ষিণ কোরিয়া", code: "kr" },
+  ];
+
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border hero-grid-bg">
-        {/* Decorative floating blobs */}
-        <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-royal/15 blur-3xl animate-float" />
-        <div className="pointer-events-none absolute right-0 top-32 h-80 w-80 rounded-full bg-indigo/15 blur-3xl animate-float-slow" />
-        <div className="pointer-events-none absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-success/10 blur-3xl animate-float" />
+      <section className="relative overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20career%20banner%20with%20diverse%20professionals%20engineer%20doctor%20businessman%20nurse%20chef%20delivery%20person%20world%20map%20airplane%20gulf%20city%20skyline%20blue%20sky%20clouds%20bright%20clean%20modern%20design&image_size=landscape_16_9')"
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-transparent" />
+        </div>
 
-        <div className="container-page relative grid gap-10 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
-          <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-success/25 bg-white px-3 py-1 text-xs font-semibold text-success shadow-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
-              </span>
-              BMET Licensed
-              <span className="mx-1 h-3 w-px bg-success/30" />
-              <span className="text-foreground/70">Verified Overseas Jobs</span>
-            </div>
-            <h1 className="mt-4 text-[34px] font-bold leading-[1.05] tracking-tight text-foreground md:text-[48px]">
-              Find verified overseas jobs <br className="hidden sm:block" />
-              from <span className="gradient-text">trusted employers</span>.
+        <div className="container-page relative py-16 lg:py-20">
+          <div className="w-full">
+            <h1 className="text-[40px] font-extrabold leading-tight text-[#0a1929] md:text-[56px]">
+              আপনার স্বপ্নের<br />
+              বিদেশি চাকরি এখন<br />
+              <span className="text-[#0b4f9c]">হাতের নাগালে</span>
             </h1>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-              Apply to verified jobs in Saudi Arabia, UAE, Qatar, Kuwait, Malaysia and Bangladesh
-              with salary, benefits and employer verification details.
+            <p className="mt-4 text-xl text-[#2d3748]">
+              সহজ আবেদন, নিশ্চিত সুযোগ গড়ুন আপনার উজ্জ্বল ভবিষ্যৎ
             </p>
 
-            {/* Search card */}
-            <div className="group relative mt-6 rounded-2xl border border-border bg-white p-2.5 card-elevated transition focus-within:border-royal/40 focus-within:shadow-[0_10px_40px_-12px_oklch(0.52_0.18_258_/_0.35)]">
-              <div className="pointer-events-none absolute inset-x-2 -top-px h-px bg-gradient-to-r from-transparent via-royal/40 to-transparent opacity-0 transition group-focus-within:opacity-100" />
-              <div className="grid gap-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
-                  <input
-                    type="text"
-                    placeholder={'Search ' + typed + '\u258F'}
-                    className="w-full rounded-lg border border-transparent bg-secondary/70 py-3 pl-9 pr-3 text-sm focus:border-ring focus:bg-white focus:outline-none"
-                  />
-                </div>
-                <div className="relative">
-                  <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
-                  <select className="w-full appearance-none rounded-lg border border-transparent bg-secondary/70 py-3 pl-9 pr-3 text-sm focus:border-ring focus:bg-white focus:outline-none">
-                    <option>All Countries</option>
-                    {COUNTRIES.map((c) => (
-                      <option key={c.slug}>{c.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="relative">
-                  <Briefcase className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
-                  <select className="w-full appearance-none rounded-lg border border-transparent bg-secondary/70 py-3 pl-9 pr-3 text-sm focus:border-ring focus:bg-white focus:outline-none">
-                    <option>All Industries</option>
-                    {INDUSTRIES.map((i) => (
-                      <option key={i.slug}>{i.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <button className="group/btn inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover hover:shadow-[0_8px_24px_-8px_oklch(0.28_0.09_264_/_0.5)] active:scale-[0.98]">
-                  <Search className="h-4 w-4 transition group-hover/btn:scale-110" /> Search
-                </button>
-              </div>
+            {/* Feature Icons */}
+            <div className="mt-8 flex flex-wrap gap-8 md:gap-12">
+              {features.map((feature, idx) => {
+                const Icon = feature.icon;
+                return (
+                  <div key={idx} className="flex flex-col items-start gap-2">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/90 shadow-sm border border-blue-100">
+                      <Icon className="h-8 w-8 text-[#0b4f9c]" />
+                    </div>
+                    <span className="text-sm font-semibold text-[#0a1929] whitespace-nowrap">{feature.label}</span>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-muted-foreground">Popular:</span>
-              {popularSearches.map((p) => (
-                <Link
-                  key={p.label}
-                  to="/job-board/industry/$slug"
-                  params={{ slug: "facilities-management" }}
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-medium ring-1 ring-inset ring-black/5 hover:ring-black/15 ${p.tone}`}
-                >
-                  <p.icon className="h-3 w-3" />
-                  {p.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-success" /> Embassy attested</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-success" /> Salary verified</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-success" /> Contract reviewed</span>
+            {/* Search Card */}
+            <div className="max-w-4xl">
+              <form
+                onSubmit={submitSearch}
+                className="mt-8 rounded-2xl bg-[#0b4f9c] p-5 shadow-xl"
+              >
+                <h3 className="mb-4 text-lg font-bold text-white">আপনার পছন্দের চাকরি খুঁজুন</h3>
+                <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
+                  <div className="relative">
+                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                      placeholder="চাকরির কীওয়ার্ড"
+                      className="w-full rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                    />
+                  </div>
+                  <div className="relative">
+                    <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                    <select
+                      value={country}
+                      onChange={(event) => setCountry(event.target.value)}
+                      className="w-full appearance-none rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                    >
+                      <option value="">দেশ নির্বাচন করুন</option>
+                      {COUNTRIES.map((c) => (
+                        <option key={c.slug} value={c.slug}>{c.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="relative">
+                    <Briefcase className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                    <select
+                      value={industry}
+                      onChange={(event) => setIndustry(event.target.value)}
+                      className="w-full appearance-none rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                    >
+                      <option value="">ক্যাটাগরি নির্বাচন করুন</option>
+                      {INDUSTRIES.map((i) => (
+                        <option key={i.slug} value={i.slug}>{i.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e6fff] px-6 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#155bd8] active:scale-[0.98]"
+                  >
+                    খুঁজুন
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
 
-          {/* Insight card */}
-          <div className="relative animate-fade-up delay-200">
-            <div className="absolute -left-3 -top-3 hidden h-24 w-24 rounded-full bg-indigo/15 blur-2xl md:block" />
-            <div className="absolute -bottom-4 -right-2 hidden h-32 w-32 rounded-full bg-royal/15 blur-3xl md:block" />
-            <div className="relative rounded-2xl border border-border bg-white p-5 card-elevated">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-md bg-royal-soft text-royal">
-                    <TrendingUp className="h-4 w-4" />
-                  </span>
-                  <h3 className="text-sm font-semibold">Live Job Market</h3>
-                </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-semibold text-success">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" /> Live
-                </span>
-              </div>
-
-              <div className="mt-4 grid grid-cols-2 gap-2.5">
-                <StatTile color="royal" icon={Briefcase} value="12,500+" label="Active Jobs" />
-                <StatTile color="emerald" icon={Building2} value="1,800+" label="Verified Employers" />
-                <StatTile color="indigo" icon={FileCheck2} value="4,280+" label="Applications / Week" />
-                <StatTile color="amber" icon={Globe2} value="18" label="Countries Covered" />
-              </div>
-
-              {/* Success rate */}
-              <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-foreground">Application success rate</span>
-                  <span className="font-bold text-success">86%</span>
-                </div>
-                <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-success to-success/70"
-                    style={{ width: "86%" }}
-                  />
-                </div>
-                <p className="mt-1.5 text-[11px] text-muted-foreground">
-                  Based on last 90 days of verified placements.
-                </p>
-              </div>
-
-              {/* Top countries */}
-              <div className="mt-3 rounded-lg border border-border p-3">
-                <div className="mb-2 flex items-center justify-between">
-                  <p className="text-xs font-semibold">Top hiring countries</p>
-                  <Link to="/countries" className="text-[11px] font-medium text-royal hover:underline">
-                    View all
-                  </Link>
-                </div>
-                <ul className="space-y-1.5">
-                  {topCountries.map((c) => (
-                    <li key={c.slug} className="flex items-center justify-between text-xs">
-                      <span className="flex items-center gap-2">
-                        <img
-                          src={`https://flagcdn.com/w40/${c.code}.png`}
-                          srcSet={`https://flagcdn.com/w80/${c.code}.png 2x`}
-                          width={20}
-                          height={14}
-                          alt={c.name}
-                          loading="lazy"
-                          className="h-3.5 w-5 rounded-sm object-cover ring-1 ring-inset ring-black/10"
-                        />
-                        <span className="text-foreground/80">{c.name}</span>
-                      </span>
-                      <span className="font-semibold text-foreground/70">
-                        {c.jobs.toLocaleString()}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Verified process */}
-              <div className="mt-3 grid grid-cols-2 gap-1.5 text-[11px]">
-                {[
-                  { label: "Demand letter", tone: "text-success", bg: "bg-success-soft" },
-                  { label: "Embassy attested", tone: "text-royal", bg: "bg-royal-soft" },
-                  { label: "Salary verified", tone: "text-indigo", bg: "bg-indigo-soft" },
-                  { label: "Contract OK", tone: "text-warning-foreground", bg: "bg-warning-soft" },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 font-medium ${s.tone} ${s.bg}`}
-                  >
-                    <CheckCircle2 className="h-3 w-3" />
-                    {s.label}
+          {/* Popular Destinations */}
+          <div className="mt-8 rounded-2xl bg-white/80 backdrop-blur-sm p-6 border border-gray-100 shadow-xl animate-fade-up relative z-10 w-full">
+            <div className="flex flex-col lg:flex-row items-center gap-6">
+              <span className="text-sm font-bold text-[#0a1929] whitespace-nowrap lg:border-r lg:border-gray-200 lg:pr-8">
+                জনপ্রিয় গন্তব্য
+              </span>
+              
+              <div className="flex flex-wrap justify-between items-center gap-4 md:gap-6 w-full">
+                {/* Country Flags */}
+                {countries.map((c) => (
+                  <div key={c.code} className="flex flex-col items-center gap-2 group cursor-pointer min-w-[70px]">
+                    <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md transition-all duration-300 group-hover:scale-110">
+                      <img
+                        src={c.code === 'eu' 
+                          ? 'https://flagcdn.com/w160/eu.png' 
+                          : `https://flagcdn.com/w160/${c.code}.png`}
+                        alt={c.name}
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://flagcdn.com/w160/un.png";
+                        }}
+                      />
+                    </div>
+                    <span className="text-[11px] font-medium text-[#2d3748] text-center leading-tight whitespace-nowrap">
+                      {c.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -306,11 +288,11 @@ function Home() {
           </div>
 
           <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <div className="flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused]">
+            <div className="marquee-track flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused]">
               {[...TOP_COMPANIES, ...TOP_COMPANIES].map((c, idx) => (
                 <div
                   key={`${c.domain}-${idx}`}
-                  className="flex h-16 w-52 flex-none items-center gap-3 rounded-xl border bg-white px-3 transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="marquee-item flex h-16 w-52 flex-none items-center gap-3 rounded-xl border bg-white px-3 transition hover:-translate-y-0.5 hover:shadow-md"
                   style={{ borderColor: `${c.color}33` }}
                 >
                   <span
@@ -397,9 +379,11 @@ function Home() {
       <section className="border-b border-border bg-white">
         <div className="container-page py-12">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold tracking-tight">Browse by industry</h2>
+            <h2 className="text-2xl font-bold tracking-tight">{t("Browse by industry")}</h2>
             <p className="text-sm text-muted-foreground">
-              {INDUSTRIES.length} active sectors across overseas and local markets.
+              {language === "bn"
+                ? `বিদেশি ও দেশীয় বাজারে ${INDUSTRIES.length}টি সক্রিয় সেক্টর।`
+                : `${INDUSTRIES.length} active sectors across overseas and local markets.`}
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
@@ -418,9 +402,11 @@ function Home() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <p className="text-sm font-semibold text-foreground group-hover:text-royal">
-                    {ind.name}
+                    {t(ind.name)}
                   </p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{ind.jobs} open roles</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {language === "bn" ? `${ind.jobs}টি খোলা পদ` : `${ind.jobs} open roles`}
+                  </p>
                   <ArrowRight className="absolute right-3 top-3 h-3.5 w-3.5 text-foreground/20 transition group-hover:translate-x-0.5 group-hover:text-royal" />
                 </Link>
               );

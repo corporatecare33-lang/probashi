@@ -24,9 +24,6 @@ function Companies() {
           <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
             1,800+ <span className="gradient-text">verified employers</span> hiring now
           </h1>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            From Fortune-500 Gulf giants to boutique recruitment partners — every company is verified before posting jobs.
-          </p>
           <div className="mt-5 flex max-w-xl items-center gap-2 rounded-xl border border-border bg-card p-2 shadow-sm">
             <Search className="ml-2 h-4 w-4 text-foreground/40" />
             <input

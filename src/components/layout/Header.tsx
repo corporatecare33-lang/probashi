@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth";
+import { useLanguage } from "@/lib/language";
 import { COUNTRIES, INDUSTRIES } from "@/lib/jobs";
 import logoImg from "@/assets/logo.png";
 
@@ -63,13 +64,14 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const { user, signOut } = useAuth();
+  const { language, setLanguage } = useLanguage();
   const displayName =
     (user?.user_metadata?.full_name as string | undefined) ||
     user?.email?.split("@")[0] ||
     "";
 
   return (
-    <header className="sticky top-0 z-40 bg-white">
+    <header className="sticky top-0 z-40 bg-white leading-none">
       {/* Announcement bar */}
       <div className="hidden border-b border-primary/30 bg-primary text-primary-foreground md:block">
         <div className="container-page flex h-9 items-center justify-between text-xs">
@@ -84,6 +86,26 @@ export function Header() {
             </p>
           </div>
           <div className="flex items-center gap-5">
+            <div className="inline-flex items-center rounded-md bg-white/10 p-0.5">
+              <button
+                type="button"
+                onClick={() => setLanguage("bn")}
+                className={`rounded px-2 py-0.5 text-xs font-semibold transition ${
+                  language === "bn" ? "bg-white text-primary" : "text-primary-foreground/80 hover:text-white"
+                }`}
+              >
+                {language === "bn" ? "বাংলা" : "BN"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`rounded px-2 py-0.5 text-xs font-semibold transition ${
+                  language === "en" ? "bg-white text-primary" : "text-primary-foreground/80 hover:text-white"
+                }`}
+              >
+                EN
+              </button>
+            </div>
             <Link to="/" className="flex items-center gap-1.5 opacity-80 hover:opacity-100">
               <HelpCircle className="h-3.5 w-3.5" /> Help Center
             </Link>
@@ -114,7 +136,7 @@ export function Header() {
 
       {/* Main bar */}
       <div className="border-b border-border bg-white/95 backdrop-blur">
-        <div className="container-page flex h-16 items-center justify-between gap-6">
+        <div className="container-page flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center">
             <img
               src={logoImg}
@@ -123,13 +145,13 @@ export function Header() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-0.5 lg:flex">
+          <nav className="hidden items-center gap-0 lg:flex">
             {navLinks.map((l) => (
               <div key={l.to} className="group relative">
                 <Link
                   to={l.to}
                   activeOptions={{ exact: l.to === "/" }}
-                  className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/75 hover:bg-royal-soft hover:text-royal data-[status=active]:bg-royal-soft data-[status=active]:text-royal"
+                  className="inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-2 text-sm font-medium leading-none text-foreground/75 hover:bg-royal-soft hover:text-royal data-[status=active]:bg-royal-soft data-[status=active]:text-royal"
                 >
                   {l.label}
                   {l.menu && (
@@ -172,16 +194,16 @@ export function Header() {
           </nav>
 
 
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-1.5 md:flex">
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-1.5 rounded-md border border-border-strong bg-white px-3 py-2 text-sm font-medium text-foreground hover:border-royal/40 hover:bg-royal-soft hover:text-royal"
+              className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-md border border-border-strong bg-white px-2.5 text-sm font-medium leading-none text-foreground hover:border-royal/40 hover:bg-royal-soft hover:text-royal"
             >
-              <Upload className="h-4 w-4" /> Upload CV
+              <Upload className="h-4 w-4 shrink-0" /> Upload CV
             </Link>
             <Link
               to="/employer"
-              className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary-hover"
+              className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-semibold leading-none text-primary-foreground shadow-sm hover:bg-primary-hover"
             >
               Post a Job
             </Link>
@@ -227,9 +249,9 @@ export function Header() {
               <Link
                 to="/login"
                 search={{ tab: "signin" }}
-                className="ml-1 inline-flex items-center gap-1.5 rounded-md border border-border bg-white px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-secondary"
+                className="ml-1 inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-md border border-border bg-white px-2.5 text-sm font-medium leading-none text-foreground/80 hover:bg-secondary"
               >
-                <UserCircle2 className="h-4 w-4" /> Sign in
+                <UserCircle2 className="h-4 w-4 shrink-0" /> Sign in
               </Link>
             )}
           </div>
@@ -260,9 +282,6 @@ export function Header() {
               <div className="mt-2 flex gap-2 border-t border-border pt-3">
                 <Link to="/dashboard" className="flex-1 rounded-md border border-border-strong px-3 py-2 text-center text-sm font-medium">
                   Upload CV
-                </Link>
-                <Link to="/employer" className="flex-1 rounded-md bg-primary px-3 py-2 text-center text-sm font-semibold text-primary-foreground">
-                  Post a Job
                 </Link>
               </div>
             </nav>
