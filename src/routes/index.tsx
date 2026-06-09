@@ -144,15 +144,15 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-[#f8fafc]">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
           style={{
             backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20career%20banner%20with%20diverse%20professionals%20engineer%20doctor%20businessman%20nurse%20chef%20delivery%20person%20world%20map%20airplane%20gulf%20city%20skyline%20blue%20sky%20clouds%20bright%20clean%20modern%20design&image_size=landscape_16_9')"
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/60 via-indigo-50/40 to-transparent" />
         </div>
 
         <div className="container-page relative py-16 lg:py-20">
@@ -189,22 +189,22 @@ function Home() {
               >
                 <h3 className="mb-4 text-lg font-bold text-white">আপনার পছন্দের চাকরি খুঁজুন</h3>
                 <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
-                  <div className="relative">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                  <div className="relative flex items-center justify-center bg-white rounded-xl">
+                    <Search className="absolute left-4 h-4 w-4 text-gray-500" />
                     <input
                       type="text"
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
                       placeholder="চাকরির কীওয়ার্ড"
-                      className="w-full rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                      className="w-full rounded-xl border-0 bg-transparent py-4 pl-10 pr-4 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none"
                     />
                   </div>
-                  <div className="relative">
-                    <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                  <div className="relative flex items-center justify-center bg-white rounded-xl">
+                    <MapPin className="absolute left-4 h-4 w-4 text-gray-500" />
                     <select
                       value={country}
                       onChange={(event) => setCountry(event.target.value)}
-                      className="w-full appearance-none rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
                     >
                       <option value="">দেশ নির্বাচন করুন</option>
                       {COUNTRIES.map((c) => (
@@ -212,12 +212,12 @@ function Home() {
                       ))}
                     </select>
                   </div>
-                  <div className="relative">
-                    <Briefcase className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                  <div className="relative flex items-center justify-center bg-white rounded-xl">
+                    <Briefcase className="absolute left-4 h-4 w-4 text-gray-500" />
                     <select
                       value={industry}
                       onChange={(event) => setIndustry(event.target.value)}
-                      className="w-full appearance-none rounded-xl border-0 bg-white py-4 pl-9 pr-3 text-sm focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                      className="w-full appearance-none rounded-xl border-0 bg-transparent py-4 pl-10 pr-10 text-sm text-center focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
                     >
                       <option value="">ক্যাটাগরি নির্বাচন করুন</option>
                       {INDUSTRIES.map((i) => (
@@ -227,7 +227,7 @@ function Home() {
                   </div>
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e6fff] px-6 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#155bd8] active:scale-[0.98]"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1e6fff] px-8 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[#155bd8] active:scale-[0.98]"
                   >
                     খুঁজুন
                   </button>
