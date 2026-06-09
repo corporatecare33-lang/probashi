@@ -152,12 +152,12 @@ function Home() {
           style={{
             backgroundImage: `url(${heroBg})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'right 20% top 15%',
             backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* Gradient Overlay for text readability - reduced opacity */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/50 to-transparent md:from-white/70" />
+          {/* Gradient Overlay for text readability - stronger white on the left */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent md:from-white md:via-white/40" />
         </div>
 
         <div className="container-page relative z-10 py-16 lg:py-24">
