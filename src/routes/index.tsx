@@ -144,16 +144,15 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#f8fafc]">
-        {/* Background Image */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#e0f2fe] via-[#f1f5f9] to-white">
+        {/* Background Image with Overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.15]"
           style={{
             backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20career%20banner%20with%20diverse%20professionals%20engineer%20doctor%20businessman%20nurse%20chef%20delivery%20person%20world%20map%20airplane%20gulf%20city%20skyline%20blue%20sky%20clouds%20bright%20clean%20modern%20design&image_size=landscape_16_9')"
           }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/60 via-indigo-50/40 to-transparent" />
-        </div>
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-transparent to-transparent" />
 
         <div className="container-page relative py-16 lg:py-20">
           <div className="w-full">
