@@ -144,19 +144,22 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-slate-50">
+      <section className="relative min-h-[500px] overflow-hidden bg-slate-100">
         {/* Background Image Container */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1454165833767-027ffea9e778?q=80&w=2070&auto=format&fit=crop')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* Gradient Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent md:from-white/90" />
+          {/* Gradient Overlay for text readability - reduced opacity */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/50 to-transparent md:from-white/70" />
         </div>
 
-        <div className="container-page relative py-16 lg:py-20">
+        <div className="container-page relative z-10 py-16 lg:py-24">
           <div className="w-full">
             <h1 className="text-[40px] font-extrabold leading-tight text-[#0a1929] md:text-[56px]">
               আপনার স্বপ্নের<br />
