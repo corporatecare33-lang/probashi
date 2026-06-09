@@ -144,15 +144,17 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#e0f2fe] via-[#f1f5f9] to-white">
-        {/* Background Image with Overlay */}
+      <section className="relative overflow-hidden">
+        {/* Background Image Container */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.15]"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20career%20banner%20with%20diverse%20professionals%20engineer%20doctor%20businessman%20nurse%20chef%20delivery%20person%20world%20map%20airplane%20gulf%20city%20skyline%20blue%20sky%20clouds%20bright%20clean%20modern%20design&image_size=landscape_16_9')"
+            backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20overseas%20career%20banner%20with%20diverse%20professionals%20working%20abroad%20blue%20sky%20clean%20bright%20modern%20business%20landscape%20high%20quality&image_size=landscape_16_9')"
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-transparent to-transparent" />
+        >
+          {/* Gradient Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent md:from-white/90" />
+        </div>
 
         <div className="container-page relative py-16 lg:py-20">
           <div className="w-full">
