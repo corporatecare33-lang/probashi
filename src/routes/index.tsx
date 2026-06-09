@@ -144,12 +144,12 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-slate-50">
         {/* Background Image Container */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://coresg-normal.trae.ai/api/ide/v1/text-to-image?prompt=professional%20overseas%20career%20banner%20with%20diverse%20professionals%20working%20abroad%20blue%20sky%20clean%20bright%20modern%20business%20landscape%20high%20quality&image_size=landscape_16_9')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1454165833767-027ffea9e778?q=80&w=2070&auto=format&fit=crop')"
           }}
         >
           {/* Gradient Overlay for text readability */}
